@@ -199,6 +199,30 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     cursor: pointer;
 }
 
+/* pagination */
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination-box {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+}
+
+.fill-box {
+    background-color: var(--cta);
+    color: var(--primary);
+}
+
+.fill-box:hover {
+    cursor: pointer;
+}
+
 /* mobile */
 
 @media (max-width: 768px) {
