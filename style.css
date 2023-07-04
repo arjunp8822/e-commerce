@@ -15,11 +15,12 @@
     --cta: #17252a;
 
     --border-radius: 5px;
+    --btn-padding: 10px 15px;
+    --shadow: 5px 5px 10px rgba(0, 0, 0, 0.1)
 }
 
 section, footer {
     max-width: 1800px;
-    background-color: red;
     margin-left: auto;
     margin-right: auto;
     padding: 80px;
@@ -52,7 +53,6 @@ nav a {
 .nav-search {
     width: min(800px, 70%);
     position: relative;
-    background-color: yellow;
 }
 
 .nav-search input {
@@ -78,6 +78,32 @@ nav a {
 }
 
 nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
+    cursor: pointer;
+}
+
+/* categories */
+
+#categories ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+#categories li {
+    background-color: var(--cta);
+    color: var(--primary);
+    padding: var(--btn-padding);
+    border-radius: var(--border-radius);
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    box-shadow: var(--shadow);
+}
+
+#categories li:hover {
     cursor: pointer;
 }
 
