@@ -89,6 +89,7 @@ const createFoodCards = (img, title, price) => {
   newCardTextContainer.appendChild(newCardButton);
 
   newCardIcon.className = "icon card-icon";
+  newCardIcon.nodeValue = "Test";
   newCardImageContainer.className = "img-container";
   newCardTextContainer.className = "text-container";
   newCardImage.className = "food";
@@ -99,6 +100,10 @@ const createFoodCards = (img, title, price) => {
   newCardTitle.textContent = title;
   newCardPrice.textContent = price;
   newCardButton.textContent = "Add To Cart";
+
+  newCardIcon.addEventListener("click", (e) => {
+    addToFavourites(e);
+  });
 };
 
 // create list of foods where you can filter by category and page
@@ -239,3 +244,39 @@ if (pageNum === 1) {
 if (pageNum === maxPages) {
   right.classList.add("fill-box-inactive");
 }
+
+// add to favourites
+
+const favouriteIcon = document.querySelector("#favourite-icon");
+
+const addToFavourites = (e) => {
+  const title =
+    e.target.nextSibling.nextSibling.children[0].children[0].textContent;
+  const price =
+    e.target.nextSibling.nextSibling.children[0].children[1].textContent;
+  console.log(title, price);
+  const data = {
+    title: title,
+    price: price,
+  };
+
+  let existingItems = JSON.parse(localStorage.getItem("favourites"));
+  if (existingItems === null) {
+    existingItems = [];
+  }
+  if (existingItems.find((x) => x.title === data.title)) {
+    console.log("already exists");
+    // NEED TO CHANGE THIS TO AN ALERT BOX
+  } else {
+    existingItems.push(data);
+    localStorage.setItem("favourites", JSON.stringify(existingItems));
+  }
+};
+
+const checkFavourites = () => {
+  console.log(JSON.parse(localStorage.getItem("favourites")));
+};
+
+favouriteIcon.addEventListener("click", () => {
+  checkFavourites();
+});
