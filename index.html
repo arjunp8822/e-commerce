@@ -12,14 +12,13 @@
             <img src="./assets/search.png" alt="favourites" class="icon search"> 
         </div>
         <ul class="nav-links">
-            <li>
-                <img src="./assets/heart-fill.png" alt="favourites" class="icon" id="favourite-icon">                
+            <li class="favourite-container">
+                <img src="./assets/heart-fill.png" alt="favourites" class="icon" id="favourite-icon">
+                <div class="favourite-count hide">1</div>                
             </li>
-            <li>
-                <img src="./assets/cart-fill.png" alt="favourites" class="icon" id="cart-icon"> 
-            </li>
-            <li>
-                <img src="./assets/dark.png" alt="favourites" class="icon"> 
+            <li class="cart-container">
+                <img src="./assets/cart-fill.png" alt="cart" class="icon" id="cart-icon"> 
+                <div class="cart-count hide">1</div>
             </li>
         </ul>
     </nav>
@@ -42,6 +41,9 @@
         <div id="page" class="pagination-box">1</div>
         <div id="right" class="pagination-box fill-box">></div>
     </section>
+
+    <div id="favourite-box" class="hide">
+    </div>
 
     <script src="script.js"></script>
 </body>

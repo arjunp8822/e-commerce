@@ -84,6 +84,44 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     cursor: pointer;
 }
 
+.favourite-container {
+    position: relative;
+}
+
+.favourite-count {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translate(-15px, 15px);
+    background-color: var(--cta);
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 10px;
+}
+
+.cart-container {
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translate(-15px, 15px);
+    background-color: var(--cta);
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 10px;
+}
+
 /* categories */
 
 #categories ul {
@@ -200,10 +238,6 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     cursor: pointer;
 }
 
-.hide {
-    display: none;
-}
-
 /* pagination */
 
 #pagination {
@@ -234,6 +268,49 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
 
 .fill-box-inactive {
     background-color: var(--cta-light);
+}
+
+/* favourite box */
+
+#favourite-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-light);
+    gap: 20px;
+    width: 250px;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    position: absolute;
+    top: 100px;
+    right: 30px;
+}
+
+#favourite-box div {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    border-bottom: 1px solid var(--grey);
+    padding-bottom: 10px;
+    font-size: 13px;
+    width: 100%;
+}
+
+#favourite-box button {
+    background-color: var(--cta);
+    border: none;
+    padding: var(--btn-padding);
+    border-radius: var(--border-radius);
+    color: var(--primary);
+    font-size: 11px;
+}
+
+/* hide elements */
+
+.hide {
+    display: none;
 }
 
 /* mobile */

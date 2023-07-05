@@ -257,7 +257,29 @@ const generateCards = (lst, category, start, end) => {
   }
 };
 
+// initialise load state
+
 generateCards(foodList, currentCategory, startIdx, endIdx);
+
+const favourites = document.querySelector(".favourite-count");
+const cart = document.querySelector(".cart-count");
+
+let existingFavouriteItems = JSON.parse(localStorage.getItem("favourites"));
+let existingCartItems = JSON.parse(localStorage.getItem("cart"));
+
+if (existingFavouriteItems === null) {
+  existingFavouriteItems = [];
+} else {
+  favourites.textContent = existingFavouriteItems.length;
+  favourites.classList.remove("hide");
+}
+
+if (existingCartItems === null) {
+  existingCartItems = [];
+} else {
+  cart.textContent = existingCartItems.length;
+  cart.classList.remove("hide");
+}
 
 if (pageNum === 1) {
   left.classList.add("fill-box-inactive");
@@ -294,6 +316,8 @@ const addToFavourites = (e) => {
   } else {
     existingItems.push(data);
     localStorage.setItem("favourites", JSON.stringify(existingItems));
+    favourites.textContent = existingItems.length;
+    favourites.classList.remove("hide");
   }
 };
 
@@ -327,6 +351,8 @@ const addToCart = (e) => {
   } else {
     existingItems.push(data);
     localStorage.setItem("cart", JSON.stringify(existingItems));
+    cart.textContent = existingItems.length;
+    cart.classList.remove("hide");
   }
 };
 
@@ -337,3 +363,29 @@ const checkCart = () => {
 cartIcon.addEventListener("click", () => {
   checkCart();
 });
+
+// generate favourites saved in local storage
+
+const favouriteContainer = document.querySelector("#favourite-box");
+const savedFavourites = JSON.parse(localStorage.getItem("favourites"));
+const allFavouriteButton = document.createElement("button");
+
+for (let item of savedFavourites) {
+  console.log(item);
+  const favouriteDiv = document.createElement("div");
+  let favouriteTitle = document.createElement("p");
+  let favouritePrice = document.createElement("p");
+  const favouriteButton = document.createElement("button");
+
+  favouriteContainer.appendChild(favouriteDiv);
+  favouriteDiv.appendChild(favouriteTitle);
+  favouriteDiv.appendChild(favouritePrice);
+  favouriteDiv.appendChild(favouriteButton);
+
+  favouriteTitle.textContent = item.title;
+  favouritePrice = item.price;
+  favouriteButton.textContent = "Remove";
+}
+
+favouriteContainer.appendChild(allFavouriteButton);
+allFavouriteButton.textContent = "Remove All";
