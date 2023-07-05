@@ -6,66 +6,77 @@ foodList = [
     title: "Hamburger 1",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Burgers",
     title: "Hamburger 2",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Burgers",
     title: "Hamburger 3",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Pizzas",
     title: "Pizza 1",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Pizzas",
     title: "Pizza 2",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Pizzas",
     title: "Pizza 3",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Desserts",
     title: "Dessert 1",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Desserts",
     title: "Dessert 2",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Drinks",
     title: "Drinks 1",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
   {
     category: "Drinks",
     title: "Drinks 2",
     price: "$20.00",
     img: "./assets/food/hamburger.png",
+    favourite: false,
   },
 ];
 
 const createFoodCards = (img, title, price) => {
   const newCard = document.createElement("div");
   const newCardIcon = document.createElement("img");
+  const newCardFillIcon = document.createElement("img");
   const newCardImageContainer = document.createElement("div");
   const newCardTextContainer = document.createElement("div");
 
@@ -79,6 +90,7 @@ const createFoodCards = (img, title, price) => {
   foodContainer.appendChild(newCard);
 
   newCard.appendChild(newCardIcon);
+  newCard.appendChild(newCardFillIcon);
   newCard.appendChild(newCardImageContainer);
   newCard.appendChild(newCardTextContainer);
 
@@ -89,13 +101,14 @@ const createFoodCards = (img, title, price) => {
   newCardTextContainer.appendChild(newCardButton);
 
   newCardIcon.className = "icon card-icon";
-  newCardIcon.nodeValue = "Test";
+  newCardFillIcon.className = "icon card-icon hide";
   newCardImageContainer.className = "img-container";
   newCardTextContainer.className = "text-container";
   newCardImage.className = "food";
   newCardTextDetail.className = "text-detail";
 
   newCardIcon.src = "./assets/heart.png";
+  newCardFillIcon.src = "./assets/heart-fill.png";
   newCardImage.src = img;
   newCardTitle.textContent = title;
   newCardPrice.textContent = price;
@@ -103,6 +116,12 @@ const createFoodCards = (img, title, price) => {
 
   newCardIcon.addEventListener("click", (e) => {
     addToFavourites(e);
+    newCardIcon.classList.add("hide");
+    newCardFillIcon.classList.remove("hide");
+  });
+  newCardFillIcon.addEventListener("click", (e) => {
+    newCardIcon.classList.remove("hide");
+    newCardFillIcon.classList.add("hide");
   });
   newCardButton.addEventListener("click", (e) => {
     addToCart(e);
@@ -253,10 +272,13 @@ if (pageNum === maxPages) {
 const favouriteIcon = document.querySelector("#favourite-icon");
 
 const addToFavourites = (e) => {
+  console.log(e);
   const title =
-    e.target.nextSibling.nextSibling.children[0].children[0].textContent;
+    e.target.nextSibling.nextSibling.nextSibling.children[0].children[0]
+      .textContent;
   const price =
-    e.target.nextSibling.nextSibling.children[0].children[1].textContent;
+    e.target.nextSibling.nextSibling.nextSibling.children[0].children[1]
+      .textContent;
   console.log(title, price);
   const data = {
     title: title,
@@ -289,7 +311,7 @@ const cartIcon = document.querySelector("#cart-icon");
 
 const addToCart = (e) => {
   const title = e.target.previousSibling.children[0].textContent;
-  const price = e.target.previousSibling.children[0].textContent;
+  const price = e.target.previousSibling.children[1].textContent;
   const data = {
     title: title,
     price: price,

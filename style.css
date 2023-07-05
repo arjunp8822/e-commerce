@@ -200,6 +200,10 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     cursor: pointer;
 }
 
+.hide {
+    display: none;
+}
+
 /* pagination */
 
 #pagination {
