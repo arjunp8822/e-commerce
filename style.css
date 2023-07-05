@@ -14,6 +14,7 @@
     --secondary: #3aafa9;
     --secondary-light: #bbdedd;
     --cta: #17252a;
+    --cta-light: #819ca6;
     --grey: grey;
 
     --border-radius: 5px;
@@ -212,6 +213,10 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     padding: 10px;
     border-radius: var(--border-radius);
     font-weight: 600;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .fill-box {
@@ -221,6 +226,10 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
 
 .fill-box:hover {
     cursor: pointer;
+}
+
+.fill-box-inactive {
+    background-color: var(--cta-light);
 }
 
 /* mobile */

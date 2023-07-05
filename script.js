@@ -101,29 +101,141 @@ const createFoodCards = (img, title, price) => {
   newCardButton.textContent = "Add To Cart";
 };
 
+// create list of foods where you can filter by category and page
+
 const foodContainer = document.querySelector("#card-container");
+const categoryButtons = document.querySelectorAll("#category");
+const left = document.querySelector("#left");
+const right = document.querySelector("#right");
+const page = document.querySelector("#page");
 
-for (let i of foodList) {
-  createFoodCards(i.img, i.title, i.price);
-}
+// initialise state values and generate starter list
 
-// filter by category
+let pageNum = 1;
+let maxItemsPerPage = 3;
+let currentCategory = "All";
+let maxPages = Math.ceil(foodList.length / maxItemsPerPage);
+let startIdx = 0;
+let actualEndIdx = maxItemsPerPage;
+let endIdx = maxItemsPerPage;
 
-const categories = document.querySelectorAll("#category");
+// change category on button click
 
-for (let cat of categories) {
-  cat.addEventListener("click", () => {
-    if (cat.textContent === "All") {
-      foodContainer.replaceChildren();
-      for (let i of foodList) {
-        createFoodCards(i.img, i.title, i.price);
-      }
+for (let button of categoryButtons) {
+  button.addEventListener("click", () => {
+    if (button.textContent === "All") {
+      currentCategory = "All";
+      maxPages = Math.ceil(foodList.length / maxItemsPerPage);
+    }
+    if (button.textContent === "Burgers") {
+      currentCategory = "Burgers";
+      maxPages = Math.ceil(
+        foodList.filter((x) => x.category === currentCategory).length /
+          maxItemsPerPage
+      );
+    }
+    if (button.textContent === "Pizzas") {
+      currentCategory = "Pizzas";
+      maxPages = Math.ceil(
+        foodList.filter((x) => x.category === currentCategory).length /
+          maxItemsPerPage
+      );
+    }
+    if (button.textContent === "Desserts") {
+      currentCategory = "Desserts";
+      maxPages = Math.ceil(
+        foodList.filter((x) => x.category === currentCategory).length /
+          maxItemsPerPage
+      );
+    }
+    if (button.textContent === "Drinks") {
+      currentCategory = "Drinks";
+      maxPages = Math.ceil(
+        foodList.filter((x) => x.category === currentCategory).length /
+          maxItemsPerPage
+      );
+    }
+    generateCards(foodList, currentCategory, startIdx, endIdx);
+
+    if (pageNum === 1) {
+      left.classList.add("fill-box-inactive");
+    }
+
+    if (pageNum === maxPages) {
+      right.classList.add("fill-box-inactive");
     } else {
-      const catList = foodList.filter((x) => x.category === cat.textContent);
-      foodContainer.replaceChildren();
-      for (let i of catList) {
-        createFoodCards(i.img, i.title, i.price);
-      }
+      right.classList.remove("fill-box-inactive");
     }
   });
+}
+
+// change slice indexs on button click
+
+left.addEventListener("click", () => {
+  if (pageNum > 1) {
+    pageNum -= 1;
+    page.textContent = pageNum;
+    actualEndIdx -= maxItemsPerPage;
+    if (startIdx - maxItemsPerPage < 0) {
+      actualEndIdx = 0;
+    } else {
+      startIdx -= maxItemsPerPage;
+    }
+    if (actualEndIdx != endIdx) {
+      endIdx = actualEndIdx;
+    }
+  }
+  if (pageNum === 1) {
+    left.classList.add("fill-box-inactive");
+  }
+  if (pageNum < maxPages) {
+    right.classList.remove("fill-box-inactive");
+  }
+  generateCards(foodList, currentCategory, startIdx, endIdx);
+});
+
+right.addEventListener("click", () => {
+  if (pageNum < maxPages) {
+    pageNum += 1;
+    page.textContent = pageNum;
+
+    startIdx += maxItemsPerPage;
+    actualEndIdx += maxItemsPerPage;
+    if (endIdx + maxItemsPerPage > foodList.length) {
+      endIdx = foodList.length;
+    } else {
+      endIdx += maxItemsPerPage;
+    }
+  }
+  if (pageNum === maxPages) {
+    right.classList.add("fill-box-inactive");
+  }
+  if (pageNum > 1) {
+    left.classList.remove("fill-box-inactive");
+  }
+  generateCards(foodList, currentCategory, startIdx, endIdx);
+});
+
+// create function to generate cards
+
+const generateCards = (lst, category, start, end) => {
+  foodContainer.replaceChildren();
+  let categoryList = [...lst];
+  if (category !== "All") {
+    categoryList = lst.filter((x) => x.category === category);
+  }
+  const finalList = categoryList.slice(start, end);
+  for (let i of finalList) {
+    createFoodCards(i.img, i.title, i.price);
+  }
+};
+
+generateCards(foodList, currentCategory, startIdx, endIdx);
+
+if (pageNum === 1) {
+  left.classList.add("fill-box-inactive");
+}
+
+if (pageNum === maxPages) {
+  right.classList.add("fill-box-inactive");
 }
