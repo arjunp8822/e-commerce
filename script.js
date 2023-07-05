@@ -104,6 +104,9 @@ const createFoodCards = (img, title, price) => {
   newCardIcon.addEventListener("click", (e) => {
     addToFavourites(e);
   });
+  newCardButton.addEventListener("click", (e) => {
+    addToCart(e);
+  });
 };
 
 // create list of foods where you can filter by category and page
@@ -265,7 +268,6 @@ const addToFavourites = (e) => {
     existingItems = [];
   }
   if (existingItems.find((x) => x.title === data.title)) {
-    console.log("already exists");
     // NEED TO CHANGE THIS TO AN ALERT BOX
   } else {
     existingItems.push(data);
@@ -279,4 +281,37 @@ const checkFavourites = () => {
 
 favouriteIcon.addEventListener("click", () => {
   checkFavourites();
+});
+
+// add to cart
+
+const cartIcon = document.querySelector("#cart-icon");
+
+const addToCart = (e) => {
+  const title = e.target.previousSibling.children[0].textContent;
+  const price = e.target.previousSibling.children[0].textContent;
+  const data = {
+    title: title,
+    price: price,
+  };
+
+  let existingItems = JSON.parse(localStorage.getItem("cart"));
+  if (existingItems === null) {
+    existingItems = [];
+  }
+  if (existingItems.find((x) => x.title === data.title)) {
+    console.log("already exists");
+    // NEED TO CHANGE THIS TO AN ALERT BOX
+  } else {
+    existingItems.push(data);
+    localStorage.setItem("cart", JSON.stringify(existingItems));
+  }
+};
+
+const checkCart = () => {
+  console.log(JSON.parse(localStorage.getItem("cart")));
+};
+
+cartIcon.addEventListener("click", () => {
+  checkCart();
 });
