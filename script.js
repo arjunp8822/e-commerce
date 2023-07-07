@@ -26,49 +26,49 @@ foodList = [
     category: "Pizzas",
     title: "Pizza 1",
     price: "$20.00",
-    img: "./assets/food/hamburger.png",
+    img: "./assets/food/pizza.png",
     favourite: false,
   },
   {
     category: "Pizzas",
     title: "Pizza 2",
     price: "$20.00",
-    img: "./assets/food/hamburger.png",
+    img: "./assets/food/pizza.png",
     favourite: false,
   },
   {
     category: "Pizzas",
     title: "Pizza 3",
     price: "$20.00",
-    img: "./assets/food/hamburger.png",
+    img: "./assets/food/pizza.png",
     favourite: false,
   },
   {
     category: "Desserts",
     title: "Dessert 1",
     price: "$20.00",
-    img: "./assets/food/hamburger.png",
+    img: "./assets/food/dessert.png",
     favourite: false,
   },
   {
     category: "Desserts",
     title: "Dessert 2",
     price: "$20.00",
-    img: "./assets/food/hamburger.png",
+    img: "./assets/food/dessert.png",
     favourite: false,
   },
   {
     category: "Drinks",
     title: "Drinks 1",
     price: "$20.00",
-    img: "./assets/food/hamburger.png",
+    img: "./assets/food/drink.png",
     favourite: false,
   },
   {
     category: "Drinks",
     title: "Drinks 2",
     price: "$20.00",
-    img: "./assets/food/hamburger.png",
+    img: "./assets/food/drink.png",
     favourite: false,
   },
 ];
@@ -531,15 +531,6 @@ const generateSeachList = (input) => {
     initialFoodList.classList.add("hide");
   }
 };
-
-// for (let i of foodList) {
-//   const item = generateSearchItem(i.title);
-//   initialFoodList.appendChild(item);
-// }
-
-// const searchList = () => {
-//   foodList.
-// }
 
 formInput.addEventListener("input", (e) => {
   initialFoodList.replaceChildren();
