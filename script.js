@@ -421,6 +421,49 @@ const generateFavouriteContainer = () => {
   }
 };
 
+// generate cart saved in local storage
+
+let showCart = false;
+
+const cartContainer = document.querySelector("#favourite-box");
+const savedCart = JSON.parse(localStorage.getItem("favourites"));
+
+const generateCartContainer = () => {
+  const savedCart = JSON.parse(localStorage.getItem("cart"));
+  if (showCart === true && savedCart) {
+    cartContainer.classList.add("favourite-box");
+    const allCartButton = document.createElement("button");
+
+    for (let item of savedCart) {
+      const cartDiv = document.createElement("div");
+      let cartTitle = document.createElement("p");
+      let cartPrice = document.createElement("p");
+      const cartButton = document.createElement("button");
+
+      favouriteContainer.appendChild(cartDiv);
+      cartDiv.appendChild(cartTitle);
+      cartDiv.appendChild(cartPrice);
+      cartDiv.appendChild(cartButton);
+
+      cartTitle.textContent = item.title;
+      cartPrice.textContent = item.price;
+      cartButton.textContent = "Remove";
+    }
+
+    cartContainer.appendChild(allCartButton);
+    allCartButton.textContent = "Remove All";
+    allCartButton.addEventListener("click", () => {
+      removeAllFromCart();
+      cartContainer.replaceChildren();
+      cartContainer.classList.remove("favourite-box");
+      showCart = !showCart;
+    });
+  } else {
+    cartContainer.replaceChildren();
+    cartContainer.classList.remove("favourite-box");
+  }
+};
+
 // toggle favourites container
 
 favouriteIcon.addEventListener("click", () => {
@@ -431,9 +474,24 @@ favouriteIcon.addEventListener("click", () => {
 // remove all from favourites
 
 const removeAllFromFavourites = () => {
-  const existingFavourites = localStorage.getItem("favourites");
   const existingCart = localStorage.getItem("cart");
   localStorage.clear();
   localStorage.setItem("cart", existingCart);
+  generateNavbarState();
+};
+
+// toggle cart container
+
+cartIcon.addEventListener("click", () => {
+  showCart = !showCart;
+  generateCartContainer();
+});
+
+// remove all from cart
+
+const removeAllFromCart = () => {
+  const existingFavourites = localStorage.getItem("favourites");
+  localStorage.clear();
+  localStorage.setItem("favourites", existingFavourites);
   generateNavbarState();
 };
