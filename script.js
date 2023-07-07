@@ -505,6 +505,7 @@ const initialFoodList = document.querySelector(".food-list");
 
 const generateSearchItem = (title) => {
   const foodItem = document.createElement("li");
+  foodItem.classList.add("search-option");
   foodItem.textContent = title;
   return foodItem;
 };
@@ -518,6 +519,12 @@ const generateSeachList = (input) => {
         const item = generateSearchItem(title);
         initialFoodList.appendChild(item);
         initialFoodList.classList.remove("hide");
+        item.addEventListener("click", () => {
+          initialFoodList.classList.add("hide");
+          formInput.value = "";
+          const newList = foodList.filter((x) => x.title === title);
+          generateCards(newList, newList[0].category, 0, 1);
+        });
       }
     }
   } else {

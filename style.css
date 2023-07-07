@@ -318,7 +318,11 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
 /* search list */
 
 .food-list {
-    background-color: var(--cta-light);
+    background-color: var(--primary);
+    border-radius: var(--border-radius);
+    /* border: 1px solid var(--secondary); */
+    box-shadow: var(--shadow);
+    color: var(--secondary);
     position: absolute;
     width: 100%;
     height: fit-content;
@@ -329,6 +333,12 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     flex-direction: column;
     justify-content: center;
     gap: 10px;
+}
+
+.search-option {
+    border-bottom: 1px solid var(--grey);
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 /* hide elements */
