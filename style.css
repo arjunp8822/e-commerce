@@ -72,12 +72,20 @@ nav a {
     gap: 50px;
 }
 
-.search {
-    filter: invert(75%) sepia(9%) saturate(3082%) hue-rotate(126deg) brightness(82%) contrast(76%);
+.nav-search button {
     position: absolute;
     top: 50%;
     right: 1%;
     transform: translate(-50%, -50%);
+    border: none;
+    background-color: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search {
+    filter: invert(75%) sepia(9%) saturate(3082%) hue-rotate(126deg) brightness(82%) contrast(76%);
 }
 
 nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
@@ -305,6 +313,22 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     border-radius: var(--border-radius);
     color: var(--primary);
     font-size: 11px;
+}
+
+/* search list */
+
+.food-list {
+    background-color: var(--cta-light);
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    margin-top: 20px;
+    padding: 20px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
 }
 
 /* hide elements */

@@ -495,3 +495,47 @@ const removeAllFromCart = () => {
   localStorage.setItem("favourites", existingFavourites);
   generateNavbarState();
 };
+
+// search for items
+
+const formInput = document.querySelector(".form-input");
+const formButton = document.querySelector(".form-button");
+const form = document.querySelector(".nav-search");
+const initialFoodList = document.querySelector(".food-list");
+
+const generateSearchItem = (title) => {
+  const foodItem = document.createElement("li");
+  foodItem.textContent = title;
+  return foodItem;
+};
+
+const generateSeachList = (input) => {
+  if (input.length > 0) {
+    for (let i = 0; i < foodList.length; i++) {
+      const title = foodList[i].title;
+      if (title.toLowerCase().includes(input.toLowerCase())) {
+        generateSearchItem(title);
+        const item = generateSearchItem(title);
+        initialFoodList.appendChild(item);
+        initialFoodList.classList.remove("hide");
+      }
+    }
+  } else {
+    initialFoodList.classList.add("hide");
+  }
+};
+
+// for (let i of foodList) {
+//   const item = generateSearchItem(i.title);
+//   initialFoodList.appendChild(item);
+// }
+
+// const searchList = () => {
+//   foodList.
+// }
+
+formInput.addEventListener("input", (e) => {
+  initialFoodList.replaceChildren();
+  const input = e.target.value;
+  generateSeachList(input);
+});
