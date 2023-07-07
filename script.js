@@ -73,61 +73,6 @@ foodList = [
   },
 ];
 
-const createFoodCards = (img, title, price) => {
-  const newCard = document.createElement("div");
-  const newCardIcon = document.createElement("img");
-  const newCardFillIcon = document.createElement("img");
-  const newCardImageContainer = document.createElement("div");
-  const newCardTextContainer = document.createElement("div");
-
-  const newCardImage = document.createElement("img");
-  const newCardTextDetail = document.createElement("div");
-  const newCardTitle = document.createElement("h4");
-  const newCardPrice = document.createElement("h4");
-  const newCardButton = document.createElement("button");
-
-  newCard.className = "card";
-  foodContainer.appendChild(newCard);
-
-  newCard.appendChild(newCardIcon);
-  newCard.appendChild(newCardFillIcon);
-  newCard.appendChild(newCardImageContainer);
-  newCard.appendChild(newCardTextContainer);
-
-  newCardImageContainer.appendChild(newCardImage);
-  newCardTextContainer.appendChild(newCardTextDetail);
-  newCardTextDetail.appendChild(newCardTitle);
-  newCardTextDetail.appendChild(newCardPrice);
-  newCardTextContainer.appendChild(newCardButton);
-
-  newCardIcon.className = "icon card-icon";
-  newCardFillIcon.className = "icon card-icon hide";
-  newCardImageContainer.className = "img-container";
-  newCardTextContainer.className = "text-container";
-  newCardImage.className = "food";
-  newCardTextDetail.className = "text-detail";
-
-  newCardIcon.src = "./assets/heart.png";
-  newCardFillIcon.src = "./assets/heart-fill.png";
-  newCardImage.src = img;
-  newCardTitle.textContent = title;
-  newCardPrice.textContent = price;
-  newCardButton.textContent = "Add To Cart";
-
-  newCardIcon.addEventListener("click", (e) => {
-    addToFavourites(e);
-    newCardIcon.classList.add("hide");
-    newCardFillIcon.classList.remove("hide");
-  });
-  newCardFillIcon.addEventListener("click", (e) => {
-    newCardIcon.classList.remove("hide");
-    newCardFillIcon.classList.add("hide");
-  });
-  newCardButton.addEventListener("click", (e) => {
-    addToCart(e);
-  });
-};
-
 // create list of foods where you can filter by category and page
 
 const foodContainer = document.querySelector("#card-container");
@@ -243,56 +188,11 @@ right.addEventListener("click", () => {
   generateCards(foodList, currentCategory, startIdx, endIdx);
 });
 
-// create function to generate cards
-
-const generateCards = (lst, category, start, end) => {
-  foodContainer.replaceChildren();
-  let categoryList = [...lst];
-  if (category !== "All") {
-    categoryList = lst.filter((x) => x.category === category);
-  }
-  const finalList = categoryList.slice(start, end);
-  for (let i of finalList) {
-    createFoodCards(i.img, i.title, i.price);
-  }
-};
-
-// initialise load state
-
-generateCards(foodList, currentCategory, startIdx, endIdx);
-
-const favourites = document.querySelector(".favourite-count");
-const cart = document.querySelector(".cart-count");
-
-let existingFavouriteItems = JSON.parse(localStorage.getItem("favourites"));
-let existingCartItems = JSON.parse(localStorage.getItem("cart"));
-
-if (existingFavouriteItems === null) {
-  existingFavouriteItems = [];
-} else {
-  favourites.textContent = existingFavouriteItems.length;
-  favourites.classList.remove("hide");
-}
-
-if (existingCartItems === null) {
-  existingCartItems = [];
-} else {
-  cart.textContent = existingCartItems.length;
-  cart.classList.remove("hide");
-}
-
-if (pageNum === 1) {
-  left.classList.add("fill-box-inactive");
-}
-
-if (pageNum === maxPages) {
-  right.classList.add("fill-box-inactive");
-}
-
 // add to favourites
 
 const generateNavbarState = () => {
   let existingFavouriteItems = JSON.parse(localStorage.getItem("favourites"));
+  console.log(existingFavouriteItems);
   let existingCartItems = JSON.parse(localStorage.getItem("cart"));
   if (existingFavouriteItems === null) {
     existingFavouriteItems = [];
@@ -315,7 +215,6 @@ const generateNavbarState = () => {
 const favouriteIcon = document.querySelector("#favourite-icon");
 
 const addToFavourites = (e) => {
-  console.log(e);
   const title =
     e.target.nextSibling.nextSibling.nextSibling.children[0].children[0]
       .textContent;
@@ -328,7 +227,6 @@ const addToFavourites = (e) => {
   };
 
   let existingItems = JSON.parse(localStorage.getItem("favourites"));
-  console.log(existingItems);
   if (existingItems === null) {
     existingItems = [];
   }
@@ -355,7 +253,6 @@ const addToCart = (e) => {
   };
 
   let existingItems = JSON.parse(localStorage.getItem("cart"));
-  console.log(existingItems);
   if (existingItems === null) {
     existingItems = [];
   }
@@ -370,20 +267,12 @@ const addToCart = (e) => {
   }
 };
 
-const checkCart = () => {
-  console.log(JSON.parse(localStorage.getItem("cart")));
-};
-
-cartIcon.addEventListener("click", () => {
-  checkCart();
-});
-
 // generate favourites saved in local storage
 
 let showFavourites = false;
 
 const favouriteContainer = document.querySelector("#favourite-box");
-const savedFavourites = JSON.parse(localStorage.getItem("favourites"));
+const savedFavourites = localStorage.getItem("favourites");
 
 const generateFavouriteContainer = () => {
   const savedFavourites = JSON.parse(localStorage.getItem("favourites"));
@@ -401,10 +290,27 @@ const generateFavouriteContainer = () => {
       favouriteDiv.appendChild(favouriteTitle);
       favouriteDiv.appendChild(favouritePrice);
       favouriteDiv.appendChild(favouriteButton);
+      console.log("first");
 
       favouriteTitle.textContent = item.title;
       favouritePrice.textContent = item.price;
       favouriteButton.textContent = "Remove";
+
+      favouriteButton.addEventListener("click", () => {
+        const savedFavourites = JSON.parse(localStorage.getItem("favourites"));
+        let index = null;
+        for (let i = 0; i < savedFavourites.length; i++) {
+          if (savedFavourites[i].title === item.title) {
+            index = i;
+          }
+        }
+        savedFavourites.splice(index, 1);
+        localStorage.setItem("favourites", JSON.stringify(savedFavourites));
+        generateNavbarState();
+        favouriteContainer.replaceChildren();
+        favouriteContainer.classList.remove("favourite-box");
+        showFavourites = !showFavourites;
+      });
     }
 
     favouriteContainer.appendChild(allFavouriteButton);
@@ -426,7 +332,7 @@ const generateFavouriteContainer = () => {
 let showCart = false;
 
 const cartContainer = document.querySelector("#favourite-box");
-const savedCart = JSON.parse(localStorage.getItem("favourites"));
+const savedCart = localStorage.getItem("cart");
 
 const generateCartContainer = () => {
   const savedCart = JSON.parse(localStorage.getItem("cart"));
@@ -440,7 +346,7 @@ const generateCartContainer = () => {
       let cartPrice = document.createElement("p");
       const cartButton = document.createElement("button");
 
-      favouriteContainer.appendChild(cartDiv);
+      cartContainer.appendChild(cartDiv);
       cartDiv.appendChild(cartTitle);
       cartDiv.appendChild(cartPrice);
       cartDiv.appendChild(cartButton);
@@ -448,6 +354,22 @@ const generateCartContainer = () => {
       cartTitle.textContent = item.title;
       cartPrice.textContent = item.price;
       cartButton.textContent = "Remove";
+
+      cartButton.addEventListener("click", () => {
+        const savedCart = JSON.parse(localStorage.getItem("cart"));
+        let index = null;
+        for (let i = 0; i < savedCart.length; i++) {
+          if (savedCart[i].title === item.title) {
+            index = i;
+          }
+        }
+        savedCart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(savedCart));
+        generateNavbarState();
+        cartContainer.replaceChildren();
+        cartContainer.classList.remove("favourite-box");
+        showCart = !showCart;
+      });
     }
 
     cartContainer.appendChild(allCartButton);
@@ -468,6 +390,8 @@ const generateCartContainer = () => {
 
 favouriteIcon.addEventListener("click", () => {
   showFavourites = !showFavourites;
+  showCart = false;
+  cartContainer.replaceChildren();
   generateFavouriteContainer();
 });
 
@@ -484,6 +408,9 @@ const removeAllFromFavourites = () => {
 
 cartIcon.addEventListener("click", () => {
   showCart = !showCart;
+  showFavourites = false;
+  favouriteContainer.replaceChildren();
+  // showFavourites = false;
   generateCartContainer();
 });
 
@@ -537,3 +464,105 @@ formInput.addEventListener("input", (e) => {
   const input = e.target.value;
   generateSeachList(input);
 });
+
+const createFoodCards = (img, title, price) => {
+  const newCard = document.createElement("div");
+  const newCardIcon = document.createElement("img");
+  const newCardFillIcon = document.createElement("img");
+  const newCardImageContainer = document.createElement("div");
+  const newCardTextContainer = document.createElement("div");
+
+  const newCardImage = document.createElement("img");
+  const newCardTextDetail = document.createElement("div");
+  const newCardTitle = document.createElement("h4");
+  const newCardPrice = document.createElement("h4");
+  const newCardButton = document.createElement("button");
+
+  newCard.className = "card";
+  foodContainer.appendChild(newCard);
+
+  newCard.appendChild(newCardIcon);
+  newCard.appendChild(newCardFillIcon);
+  newCard.appendChild(newCardImageContainer);
+  newCard.appendChild(newCardTextContainer);
+
+  newCardImageContainer.appendChild(newCardImage);
+  newCardTextContainer.appendChild(newCardTextDetail);
+  newCardTextDetail.appendChild(newCardTitle);
+  newCardTextDetail.appendChild(newCardPrice);
+  newCardTextContainer.appendChild(newCardButton);
+
+  newCardIcon.className = "icon card-icon";
+  newCardFillIcon.className = "icon card-icon hide";
+  newCardImageContainer.className = "img-container";
+  newCardTextContainer.className = "text-container";
+  newCardImage.className = "food";
+  newCardTextDetail.className = "text-detail";
+
+  newCardIcon.src = "./assets/heart.png";
+  newCardFillIcon.src = "./assets/heart-fill.png";
+  newCardImage.src = img;
+  newCardTitle.textContent = title;
+  newCardPrice.textContent = price;
+  newCardButton.textContent = "Add To Cart";
+
+  newCardIcon.addEventListener("click", (e) => {
+    addToFavourites(e);
+    newCardIcon.classList.add("hide");
+    newCardFillIcon.classList.remove("hide");
+  });
+  newCardFillIcon.addEventListener("click", (e) => {
+    newCardIcon.classList.remove("hide");
+    newCardFillIcon.classList.add("hide");
+  });
+  newCardButton.addEventListener("click", (e) => {
+    addToCart(e);
+  });
+};
+
+// create function to generate cards
+
+const generateCards = (lst, category, start, end) => {
+  console.log("lst");
+  foodContainer.replaceChildren();
+  let categoryList = [...lst];
+  if (category !== "All") {
+    categoryList = lst.filter((x) => x.category === category);
+  }
+  const finalList = categoryList.slice(start, end);
+  for (let i of finalList) {
+    createFoodCards(i.img, i.title, i.price);
+  }
+};
+
+// initialise load state
+
+generateCards(foodList, currentCategory, startIdx, endIdx);
+
+const favourites = document.querySelector(".favourite-count");
+const cart = document.querySelector(".cart-count");
+
+let existingFavouriteItems = JSON.parse(localStorage.getItem("favourites"));
+let existingCartItems = JSON.parse(localStorage.getItem("cart"));
+
+if (existingFavouriteItems === null) {
+  existingFavouriteItems = [];
+} else {
+  favourites.textContent = existingFavouriteItems.length;
+  favourites.classList.remove("hide");
+}
+
+if (existingCartItems === null) {
+  existingCartItems = [];
+} else {
+  cart.textContent = existingCartItems.length;
+  cart.classList.remove("hide");
+}
+
+if (pageNum === 1) {
+  left.classList.add("fill-box-inactive");
+}
+
+if (pageNum === maxPages) {
+  right.classList.add("fill-box-inactive");
+}
