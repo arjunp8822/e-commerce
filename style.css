@@ -272,14 +272,14 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
 
 /* favourite box */
 
-#favourite-box {
+.favourite-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--secondary-light);
     gap: 20px;
-    width: 250px;
+    width: 280px;
     padding: 20px;
     border-radius: var(--border-radius);
     position: absolute;
@@ -287,7 +287,7 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     right: 30px;
 }
 
-#favourite-box div {
+.favourite-box div {
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -298,7 +298,7 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     width: 100%;
 }
 
-#favourite-box button {
+.favourite-box button {
     background-color: var(--cta);
     border: none;
     padding: var(--btn-padding);

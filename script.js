@@ -291,6 +291,27 @@ if (pageNum === maxPages) {
 
 // add to favourites
 
+const generateNavbarState = () => {
+  let existingFavouriteItems = JSON.parse(localStorage.getItem("favourites"));
+  let existingCartItems = JSON.parse(localStorage.getItem("cart"));
+  if (existingFavouriteItems === null) {
+    existingFavouriteItems = [];
+  }
+  if (existingCartItems === null) {
+    existingCartItems = [];
+  }
+  if (existingFavouriteItems.length > 0) {
+    favourites.textContent = existingFavouriteItems.length;
+  } else {
+    favourites.classList.add("hide");
+  }
+  if (existingCartItems.length > 0) {
+    cart.textContent = existingCartItems.length;
+  } else {
+    cart.classList.add("hide");
+  }
+};
+
 const favouriteIcon = document.querySelector("#favourite-icon");
 
 const addToFavourites = (e) => {
@@ -301,13 +322,13 @@ const addToFavourites = (e) => {
   const price =
     e.target.nextSibling.nextSibling.nextSibling.children[0].children[1]
       .textContent;
-  console.log(title, price);
   const data = {
     title: title,
     price: price,
   };
 
   let existingItems = JSON.parse(localStorage.getItem("favourites"));
+  console.log(existingItems);
   if (existingItems === null) {
     existingItems = [];
   }
@@ -316,18 +337,10 @@ const addToFavourites = (e) => {
   } else {
     existingItems.push(data);
     localStorage.setItem("favourites", JSON.stringify(existingItems));
-    favourites.textContent = existingItems.length;
+    generateNavbarState();
     favourites.classList.remove("hide");
   }
 };
-
-const checkFavourites = () => {
-  console.log(JSON.parse(localStorage.getItem("favourites")));
-};
-
-favouriteIcon.addEventListener("click", () => {
-  checkFavourites();
-});
 
 // add to cart
 
@@ -342,6 +355,7 @@ const addToCart = (e) => {
   };
 
   let existingItems = JSON.parse(localStorage.getItem("cart"));
+  console.log(existingItems);
   if (existingItems === null) {
     existingItems = [];
   }
@@ -351,7 +365,7 @@ const addToCart = (e) => {
   } else {
     existingItems.push(data);
     localStorage.setItem("cart", JSON.stringify(existingItems));
-    cart.textContent = existingItems.length;
+    generateNavbarState();
     cart.classList.remove("hide");
   }
 };
@@ -366,26 +380,60 @@ cartIcon.addEventListener("click", () => {
 
 // generate favourites saved in local storage
 
+let showFavourites = false;
+
 const favouriteContainer = document.querySelector("#favourite-box");
 const savedFavourites = JSON.parse(localStorage.getItem("favourites"));
-const allFavouriteButton = document.createElement("button");
 
-for (let item of savedFavourites) {
-  console.log(item);
-  const favouriteDiv = document.createElement("div");
-  let favouriteTitle = document.createElement("p");
-  let favouritePrice = document.createElement("p");
-  const favouriteButton = document.createElement("button");
+const generateFavouriteContainer = () => {
+  const savedFavourites = JSON.parse(localStorage.getItem("favourites"));
+  if (showFavourites === true && savedFavourites) {
+    favouriteContainer.classList.add("favourite-box");
+    const allFavouriteButton = document.createElement("button");
 
-  favouriteContainer.appendChild(favouriteDiv);
-  favouriteDiv.appendChild(favouriteTitle);
-  favouriteDiv.appendChild(favouritePrice);
-  favouriteDiv.appendChild(favouriteButton);
+    for (let item of savedFavourites) {
+      const favouriteDiv = document.createElement("div");
+      let favouriteTitle = document.createElement("p");
+      let favouritePrice = document.createElement("p");
+      const favouriteButton = document.createElement("button");
 
-  favouriteTitle.textContent = item.title;
-  favouritePrice = item.price;
-  favouriteButton.textContent = "Remove";
-}
+      favouriteContainer.appendChild(favouriteDiv);
+      favouriteDiv.appendChild(favouriteTitle);
+      favouriteDiv.appendChild(favouritePrice);
+      favouriteDiv.appendChild(favouriteButton);
 
-favouriteContainer.appendChild(allFavouriteButton);
-allFavouriteButton.textContent = "Remove All";
+      favouriteTitle.textContent = item.title;
+      favouritePrice.textContent = item.price;
+      favouriteButton.textContent = "Remove";
+    }
+
+    favouriteContainer.appendChild(allFavouriteButton);
+    allFavouriteButton.textContent = "Remove All";
+    allFavouriteButton.addEventListener("click", () => {
+      removeAllFromFavourites();
+      favouriteContainer.replaceChildren();
+      favouriteContainer.classList.remove("favourite-box");
+      showFavourites = !showFavourites;
+    });
+  } else {
+    favouriteContainer.replaceChildren();
+    favouriteContainer.classList.remove("favourite-box");
+  }
+};
+
+// toggle favourites container
+
+favouriteIcon.addEventListener("click", () => {
+  showFavourites = !showFavourites;
+  generateFavouriteContainer();
+});
+
+// remove all from favourites
+
+const removeAllFromFavourites = () => {
+  const existingFavourites = localStorage.getItem("favourites");
+  const existingCart = localStorage.getItem("cart");
+  localStorage.clear();
+  localStorage.setItem("cart", existingCart);
+  generateNavbarState();
+};
