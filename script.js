@@ -23,6 +23,55 @@ foodList = [
     favourite: false,
   },
   {
+    category: "Burgers",
+    title: "Hamburger 4",
+    price: "$20.00",
+    img: "./assets/food/hamburger.png",
+    favourite: false,
+  },
+  {
+    category: "Burgers",
+    title: "Hamburger 5",
+    price: "$20.00",
+    img: "./assets/food/hamburger.png",
+    favourite: false,
+  },
+  {
+    category: "Burgers",
+    title: "Hamburger 6",
+    price: "$20.00",
+    img: "./assets/food/hamburger.png",
+    favourite: false,
+  },
+  {
+    category: "Burgers",
+    title: "Hamburger 7",
+    price: "$20.00",
+    img: "./assets/food/hamburger.png",
+    favourite: false,
+  },
+  {
+    category: "Burgers",
+    title: "Hamburger 8",
+    price: "$20.00",
+    img: "./assets/food/hamburger.png",
+    favourite: false,
+  },
+  {
+    category: "Burgers",
+    title: "Hamburger 9",
+    price: "$20.00",
+    img: "./assets/food/hamburger.png",
+    favourite: false,
+  },
+  {
+    category: "Burgers",
+    title: "Hamburger 10",
+    price: "$20.00",
+    img: "./assets/food/hamburger.png",
+    favourite: false,
+  },
+  {
     category: "Pizzas",
     title: "Pizza 1",
     price: "$20.00",
@@ -39,6 +88,27 @@ foodList = [
   {
     category: "Pizzas",
     title: "Pizza 3",
+    price: "$20.00",
+    img: "./assets/food/pizza.png",
+    favourite: false,
+  },
+  {
+    category: "Pizzas",
+    title: "Pizza 4",
+    price: "$20.00",
+    img: "./assets/food/pizza.png",
+    favourite: false,
+  },
+  {
+    category: "Pizzas",
+    title: "Pizza 5",
+    price: "$20.00",
+    img: "./assets/food/pizza.png",
+    favourite: false,
+  },
+  {
+    category: "Pizzas",
+    title: "Pizza 6",
     price: "$20.00",
     img: "./assets/food/pizza.png",
     favourite: false,
@@ -71,6 +141,48 @@ foodList = [
     img: "./assets/food/drink.png",
     favourite: false,
   },
+  {
+    category: "Drinks",
+    title: "Drinks 3",
+    price: "$20.00",
+    img: "./assets/food/drink.png",
+    favourite: false,
+  },
+  {
+    category: "Drinks",
+    title: "Drinks 4",
+    price: "$20.00",
+    img: "./assets/food/drink.png",
+    favourite: false,
+  },
+  {
+    category: "Drinks",
+    title: "Drinks 5",
+    price: "$20.00",
+    img: "./assets/food/drink.png",
+    favourite: false,
+  },
+  {
+    category: "Drinks",
+    title: "Drinks 6",
+    price: "$20.00",
+    img: "./assets/food/drink.png",
+    favourite: false,
+  },
+  {
+    category: "Drinks",
+    title: "Drinks 7",
+    price: "$20.00",
+    img: "./assets/food/drink.png",
+    favourite: false,
+  },
+  {
+    category: "Drinks",
+    title: "Drinks 8",
+    price: "$20.00",
+    img: "./assets/food/drink.png",
+    favourite: false,
+  },
 ];
 
 // create list of foods where you can filter by category and page
@@ -84,7 +196,7 @@ const page = document.querySelector("#page");
 // initialise state values and generate starter list
 
 let pageNum = 1;
-let maxItemsPerPage = 3;
+let maxItemsPerPage = 10;
 let currentCategory = "All";
 let maxPages = Math.ceil(foodList.length / maxItemsPerPage);
 let startIdx = 0;

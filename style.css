@@ -34,6 +34,13 @@ section, footer {
     filter: invert(100%) sepia(19%) saturate(1712%) hue-rotate(170deg) brightness(104%) contrast(102%);
 }
 
+.category-container {
+    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 40px;
+}
 
 /* navigation */
 
@@ -358,4 +365,9 @@ nav a:hover, .nav-search input:hover, .nav-links li:hover, .search:hover {
     section, footer {
         padding: 40px;
     }
+
+    .category-container {
+        height: calc(100vh - 60px);
+    }
+    
 }
